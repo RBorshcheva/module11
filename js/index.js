@@ -130,7 +130,7 @@ const comparationColor = (a, b) => {
 };
 
 const sortAPI = {
-  //bubble sorting realisation
+  //bubble sorting realisation from the studing matherials
   bubbleSort(arr, comparation) {
     const n = arr.length;
     for (let i = 0; i < n-1; i++) { 
@@ -145,9 +145,22 @@ const sortAPI = {
   },
   },
 
-  //quick sort realisation
-  quickSort(arr, comparation) {
-    // TODO: допишите функцию быстрой сортировки
+  //quick sort realisation from the studing matherials
+  quickSort(items, left, right) {
+    var index;
+   if (items.length > 1) {
+       left = typeof left != "number" ? 0 : left;
+       right = typeof right != "number" ? items.length - 1 : right;
+       index = partition(items, left, right);
+       if (left < index - 1) {
+           quickSort(items, left, index - 1);
+       }
+       if (index < right) {
+           quickSort(items, index, right);
+       }
+   }
+   return items;
+}
   },
 
   // выполняет сортировку и производит замер времени
