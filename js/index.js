@@ -125,8 +125,30 @@ filterButton.addEventListener('click', () => {
 let sortKind = 'bubbleSort'; // инициализация состояния вида сортировки
 let sortTime = '-'; // инициализация состояния времени сортировки
 
+//comaparation by two colors
 const comparationColor = (a, b) => {
-  // TODO: допишите функцию сравнения двух элементов по цвету
+  return priorityColor[fruit1.color] > priorityColor[fruit2.color];
+};
+
+// partition function
+function partition(arr, left, right) {
+  var pivot = arr[Math.floor((right + left) / 2)],
+      i = left,
+      j = right;
+  while (i <= j) {
+      while (comparation(pivot, arr[i])) {
+          i++;
+      }
+      while (comparation(arr[j], pivot)) {
+          j--;
+      }
+      if (i <= j) {
+          swap(arr, i, j);
+          i++;
+          j--;
+      }
+  }
+  return i;
 };
 
 const sortAPI = {
@@ -143,10 +165,11 @@ const sortAPI = {
        }                    
     }
   },
-  },
+  };
 
   //quick sort realisation from the studing matherials
-  quickSort(items, left, right) {
+  quickSort(items, left, right)
+  {
     var index;
    if (items.length > 1) {
        left = typeof left != "number" ? 0 : left;
@@ -161,7 +184,7 @@ const sortAPI = {
    }
    return items;
 }
-  },
+},
 
   // выполняет сортировку и производит замер времени
   startSort(sort, arr, comparation) {
@@ -169,7 +192,6 @@ const sortAPI = {
     sort(arr, comparation);
     const end = new Date().getTime();
     sortTime = `${end - start} ms`;
-  },
 };
 
 // инициализация полей
