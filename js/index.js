@@ -198,22 +198,37 @@ const sortAPI = {
 sortKindLabel.textContent = sortKind;
 sortTimeLabel.textContent = sortTime;
 
+//change sort type
 sortChangeButton.addEventListener('click', () => {
-  // TODO: переключать значение sortKind между 'bubbleSort' / 'quickSort'
+  if(sortKind == 'bubbleSort'){
+    sortKind = 'quickSort';
+  }else {
+    sortKind = 'bubbleSort';
+  };
+  sortKindLabel.textContent = sortKind;
+  sortTime = '-';
+  sortTimeLabel.textContent = sortTime;
 });
 
 sortActionButton.addEventListener('click', () => {
-  // TODO: вывести в sortTimeLabel значение 'sorting...'
+  sortTimeLabel.textContent = 'sorting...';
   const sort = sortAPI[sortKind];
   sortAPI.startSort(sort, fruits, comparationColor);
   display();
-  // TODO: вывести в sortTimeLabel значение sortTime
+  sortTimeLabel.textContent = sortTime;
 });
 
 /*** ДОБАВИТЬ ФРУКТ ***/
-
+//adding the fruit
 addActionButton.addEventListener('click', () => {
-  // TODO: создание и добавление нового фрукта в массив fruits
-  // необходимые значения берем из kindInput, colorInput, weightInput
+  let weightInputNumber = parseFloat(weightInput.value);
+  let result = {"kind": kindInput.value, "color": colorInput.value, "weight": weightInputNumber};
+  if((kindInput.value == "") || (colorInput.value == "") || (weightInput.value == "")){
+    alert("Введите все данные!!!");
+  }else if((isNaN(weightInputNumber))){
+    alert("Введите в поле weight число!!!");
+  }else {
+    fruits.push(result);  
+  };
   display();
 });
