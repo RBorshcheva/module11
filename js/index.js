@@ -16,14 +16,7 @@ let minWeight;
 //max weight field
 const maxWeightInput = document.querySelector('.maxweight__input');
 let maxWeight;
-// array of color priority for color comparison
-const priorityColor = {
-  "фиолетовый": 4,
-  "зеленый": 3,
-  "алый": 0,
-  "желтый": 2,
-  "коричневый": 1
-};
+
 
 // список фруктов в JSON формате
 let fruitsJSON = `[
@@ -74,20 +67,21 @@ const getRandomInt = (min, max) => {
 const shuffleFruits = () => {
   let result = [];
 
+  const  fruits_old  = [...fruits];
   while (fruits.length > 0) {
     //taking random index of array
-    let randi = getRandomInt(0, fruits.length-1);
+    let j = getRandomInt(0, fruits.length-1);
     //put the element with chosen index in resulting array
-    result.push(fruits[randi]);
+    result.push(fruits[j]);
     //delete the element with chosen index from the origin array
-    fruits.splice(randi,1);
+    fruits.splice(j,1);
   }
 
   fruits = result;
 
   //check the condition that the sequence of the array has changed 
-  const shuffle_check = fruits.every((element, index) =>  element == fruits_old[index]);
-  if (shuffle_check) {
+  const not_shuffled = fruits.every((element, index) =>  element == fruits_old[index]);
+  if (not_shuffled) {
     alert("Порядок элементов не изменился")
   };
 };
@@ -101,11 +95,11 @@ shuffleButton.addEventListener('click', () => {
 
 // filtering an array
 const filterFruits = () => {
-  fruits.filter((item) => {
+  fruits.filter((i) => {
     return fruits.filter((i) => {
     return ((i.weight >= minWeight) && (i.weight <= maxWeight));
-    });
   });
+  };
 
 //getting value of filter fields
 filterButton.addEventListener('click', () => {
@@ -117,18 +111,36 @@ filterButton.addEventListener('click', () => {
   }
   else {
   alert ('Значения фильтрации не заданы')
-};
+  };
 });
+}
 
 /*** СОРТИРОВКА ***/
 
 let sortKind = 'bubbleSort'; // инициализация состояния вида сортировки
 let sortTime = '-'; // инициализация состояния времени сортировки
 
+// array of color priority for color comparison
+const priorityColor = {
+  "фиолетовый": 0,
+  "зеленый": 1,
+  "алый": 2,
+  "желтый": 3,
+  "коричневый": 4
+};
+
 //comaparation by two colors
 const comparationColor = (a, b) => {
-  return priorityColor[fruit1.color] > priorityColor[fruit2.color];
+  return priorityColor[a.color] > priorityColor[b.color];
 };
+
+function quickSort_main(arr, comparation, left, right){
+  // функция обмена элементов
+    function swap(arr, firstIndex, secondIndex){
+       const temp = arr[firstIndex];
+       arr[firstIndex] = arr[secondIndex];
+       arr[secondIndex] = temp;
+    };
 
 // partition function
 function partition(arr, left, right) {
@@ -149,7 +161,25 @@ function partition(arr, left, right) {
       }
   }
   return i;
+};    
+
+//index for direction of quick sort
+var index;
+if (arr.length > 1) {
+    left = typeof left != "number" ? 0 : left;
+    right = typeof right != "number" ? arr.length - 1 : right;
+    index = partition(arr, left, right);
+    if (left < index - 1) {
+      quickSort_main(arr, comparation, left, index - 1);
+    }
+    if (index < right) {
+      quickSort_main(arr, comparation, index, right);
+    }
+}
+    return arr;
 };
+
+
 
 const sortAPI = {
   //bubble sorting realisation from the studing matherials
@@ -165,26 +195,11 @@ const sortAPI = {
        }                    
     }
   },
-  };
 
-  //quick sort realisation from the studing matherials
-  quickSort(items, left, right)
-  {
-    var index;
-   if (items.length > 1) {
-       left = typeof left != "number" ? 0 : left;
-       right = typeof right != "number" ? items.length - 1 : right;
-       index = partition(items, left, right);
-       if (left < index - 1) {
-           quickSort(items, left, index - 1);
-       }
-       if (index < right) {
-           quickSort(items, index, right);
-       }
-   }
-   return items;
-}
-},
+  //quick sort realisation from the studing matherials with usage of direction
+  quickSort(items, comparation, right, left) {
+    quickSort_main(items,  comparation, left, right);
+  },
 
   // выполняет сортировку и производит замер времени
   startSort(sort, arr, comparation, right, left)
@@ -193,6 +208,7 @@ const sortAPI = {
     sort(arr, comparation);
     const end = new Date().getTime();
     sortTime = `${end - start} ms`;
+  },
 };
 
 // инициализация полей
