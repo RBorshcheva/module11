@@ -99,7 +99,7 @@ const filterFruits = () => {
     return fruits.filter((i) => {
     return ((i.weight >= minWeight) && (i.weight <= maxWeight));
   });
-  };
+  })
 
 //getting value of filter fields
 filterButton.addEventListener('click', () => {
