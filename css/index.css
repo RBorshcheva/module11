@@ -109,22 +109,27 @@ main {
 
 .fruit_violet {
   background: #8b00ff;
+  border: 5px solid rgb(144, 180, 223);
 }
 
 .fruit_green {
   background: #84cd1b;
+  border: 5px solid rgb(144, 180, 223);
 }
 
 .fruit_carmazin {
   background: #dc143c;
+  border: 5px solid rgb(144, 180, 223);
 }
 
 .fruit_yellow {
   background: #ffd800;
+  border: 5px solid rgb(144, 180, 223);
 }
 
 .fruit_lightbrown {
   background: #cd853f;
+  border: 5px solid rgb(144, 180, 223);
 }
 
 .fruit__info {

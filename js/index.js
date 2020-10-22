@@ -18,11 +18,11 @@ const maxWeightInput = document.querySelector('.maxweight__input');
 let maxWeight;
 // array of color priority for color comparison
 const priorityColor = {
-  "фиолетовый": 0,
-  "зеленый": 1,
-  "алый": 2,
-  "желтый": 3,
-  "коричневый": 4
+  "фиолетовый": 4,
+  "зеленый": 3,
+  "алый": 0,
+  "желтый": 2,
+  "коричневый": 1
 };
 
 // список фруктов в JSON формате
@@ -187,7 +187,8 @@ const sortAPI = {
 },
 
   // выполняет сортировку и производит замер времени
-  startSort(sort, arr, comparation) {
+  startSort(sort, arr, comparation, right, left)
+  {
     const start = new Date().getTime();
     sort(arr, comparation);
     const end = new Date().getTime();
